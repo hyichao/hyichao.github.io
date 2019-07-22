@@ -4,22 +4,21 @@ title:  "iOS客户端的微信支付接入"
 tags: [iOS]
 ---
 
-对于一个iOS的APP，如果有一些虚拟的商品或者服务需要通过在线支付来收费的话，一般有几种主流的选择。
-如果是通过APP调用支付平台APP的思路的话，
 
-* 一个是调起支付宝客户端
-* 一个则是调起微信支付
+
+对于一个iOS的APP，如果有一些虚拟的商品或者服务需要通过在线支付来收费的话，有两种主流的选择：1.调起支付宝客户端；2.调起微信支付。本文将记录客户端里面，如何支持微信支付。
+
+
+
+### 文档阅读
 
 实际上，从代码的角度，调起支付APP就是把一些关键的参数通过一定方式打包成为一个订单，然后发送到支付平台的服务器。所以，只要搞清楚了参数设置，搞清楚了每个支付平台的SDK里面一些关键API的使用，基本上就可以很简单的支持支付。
 
-今天记录一下客户端里面，如何支持微信支付。首先。我们要仔细阅读一下微信SDK的开发文档，了解一下整个支付的大概流程。
+首先。我们要仔细阅读一下微信SDK的[开发文档](http://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=8_1)，了解一下整个支付的大概流程。然后根据提示，把相应的SDK下载下来，所谓的SDK，也就是一个链接库和两个头文件。下载完毕，需要把SDK导入到工程里面，并且配置一下工程。因为[开发者文档](http://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=8_5)已经有详细描述，这里就不再复述。
 
-<http://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=8_1>
 
-然后根据提示，把相应的SDK下载下来，所谓的SDK，也就是一个链接库和两个头文件，很简单。
-下载完毕，需要把SDK导入到工程里面，并且配置一下工程。因为开发者文档已经有详细描述，这里就不再复述。
 
-<http://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=8_5>
+##### 核心代码段
 
 从文档看到，调起微信支付其实最核心的是一下这么一段
 
@@ -35,23 +34,34 @@ request.sign= @"582282D72DD2B03AD892830965F428CB16E7A256";
 ```
 
 这里的范例是一段hardcode，真正使用的时候，参数都需要自行传入。
+
+
+
+##### 示例代码
+
 为了搞清楚如何使用API，我们可以下载Sample代码。不过，这个sample代码应该是微信的实习生写的，而且应该是一个对于C++比较熟悉，对于ObjectC比较陌生的实习生。。。代码风格可以看出很多东西哈。。所以这个sample读起来总觉得有点奇怪。当然，写出这个demo也是需要不错的水平，因为这个sample不仅仅是一些API的调用，还包括了一些算法的实现，MD5之类的。
 
 看懂了sample之后，一般可以自己重构一下，成为自己APP里面的一个Manager类。
-我是在2015 5 23下载的微信Sampel代码，里面包括有：
+我是在2015.5.23下载的微信Sampel代码，里面包括有
 
-* ApiXml.h
-* ApiXml.m
-* WXUtil.h
-* WXUtil.m
-* payRequestHandler.h
-* payRequestHandler.m
+```objective-c
+- ApiXml.h
+- ApiXml.m
+- WXUtil.h
+- WXUtil.m
+- payRequestHandler.h
+- payRequestHandler.m
+```
 
 如果比较看重命名规范(也就是强迫症)的OC程序猿，就会觉得这个payRequestHandler类非常别扭，与一般对类的命名规则不一致，而且handler这个词更偏向于c++风格。我就以这个类为原型，重构了一下，并改装成一个传参的方法，供自己的APP调用。APP里面卖商品，一般就是商品名字，价格两个关键参数。所以这个重构的方法也只是提供这两个参数的接口。
 
 ApiXml.h && ApiXml.m && WXUtil.h && WXUtil.m不变
 
-```
+
+
+###### WechatPayManager.h
+
+```objective-c
 //
 //  WechatPayManager.h
 //
@@ -108,10 +118,13 @@ ApiXml.h && ApiXml.m && WXUtil.h && WXUtil.m不变
                                         device:(NSString*)device;
 
 @end
-
 ```
 
-```
+
+
+###### WechatPayManager.m
+
+```objective-c
 //
 //  WechatPayManager.m
 //
@@ -336,7 +349,11 @@ ApiXml.h && ApiXml.m && WXUtil.h && WXUtil.m不变
 ```
 
 
-然后，在需要调用微信支付的Controller里面，新建一个方法。在合适的地方调用。这个方法里面利用WechatPayManager这个类进行了初始化和参数封装，然后把上述的核心代码（PayReq那一段）
+
+
+
+
+然后，在需要调用微信支付的Controller里面，新建一个方法。在合适的地方调用。这个方法里面利用WechatPayManager这个类进行了初始化和参数封装，然后调用上述的核心代码（PayReq那一段）
 
 ```
 - (void)wxPayWithOrderName:(NSString*)name price:(NSString*)price
@@ -379,7 +396,7 @@ ApiXml.h && ApiXml.m && WXUtil.h && WXUtil.m不变
 再者，支付完成了需要调用一个delegate，这个delegate方便个性化显示支付结果。一般直接把这两个delegate放在AppDelegate就好了。因为有一些其他内容也是需要在AppDelegate里面实现，省的分开找不到。
 
 
-```
+```objective-c
 -(void) onResp:(BaseResp*)resp
 {  
     //启动微信支付的response
@@ -404,10 +421,11 @@ ApiXml.h && ApiXml.m && WXUtil.h && WXUtil.m不变
 }
 ```
 
-****
 
-注意事项：
-1）如果APP里面已经使用了ShareSDK，就有一些地方要注意。不要再重复导入微信的SDK，因为shareSDK里面的extend已经包括了微信的SDK。
-2）微信本身是鼓励客户APP把签名算法放到服务器上面，这样信息就不容易被破解。但是如果客户APP本身没有服务器端，或者认为不需要放到服务器端，也可以直接把签名（加密）的部分直接放在APP端。Sample代码的注释有点乱，多次提到服务器云云，但是其实可以不这么做。
-3）微信的price单位是分。注意下即可。
-4）暂时想不到，以后想到了再记录。。
+
+>  注意事项：
+> 1）如果APP里面已经使用了ShareSDK，就有一些地方要注意。不要再重复导入微信的SDK，因为shareSDK里面的extend已经包括了微信的SDK。
+> 2）微信本身是鼓励客户APP把签名算法放到服务器上面，这样信息就不容易被破解。但是如果客户APP本身没有服务器端，或者认为不需要放到服务器端，也可以直接把签名（加密）的部分直接放在APP端。Sample代码的注释有点乱，多次提到服务器云云，但是其实可以不这么做。
+> 3）微信的price单位是分。注意下即可。
+> 4）暂时想不到，以后想到了再记录。。
+
