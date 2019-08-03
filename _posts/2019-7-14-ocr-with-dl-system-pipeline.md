@@ -8,7 +8,7 @@ tags: [Deep Learning, OCR]
 
 不知不觉已经工作两年了。这两年的主要工作落在“DeepLearning”+”OCR“上，从完全没有接触过OCR，至今算是比较清晰这个领域的近期发展趋势了，那么也是时候写一写文章记录一下。
 
-![zha3](images/zha3.jpg)
+![zha3](/downloads/zha3.jpg)
 
 
 
@@ -31,7 +31,7 @@ tags: [Deep Learning, OCR]
 
 OCR系统的输入一般是三通道图像，转化为数据格式为 [N,C,H,W]的图像，然后送入OCR系统
 
-![](images/2019-7-14-im1.png)
+![](downloads/2019-7-14-im1.png)
 
 图一 自然场景
 

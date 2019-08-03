@@ -22,7 +22,7 @@ tags: [Deep Learning, OCR]
 
 整行识别，输入是矩形图像转化而成的张量形如`[N,C,H,W]`。刚刚提到，要规避字符切分，则需要把整行识别建模成为序列问题，目前主流的是水平方向建模为序列，输出张量形如`[T, C]`，其中`T`代表序列长度，与`W`有某种函数关系，该函数关系取决于特征提取模型。
 
-![2019-7-16-im1](images/2019-7-16-im1.png) ——> “Available”
+![2019-7-16-im1](/downloads/2019-7-16-im1.png) ——> “Available”
 
 ### Output
 
@@ -46,7 +46,7 @@ tags: [Deep Learning, OCR]
 
 华中科技大学白翔老师组的经典论文，借鉴了语音识别里面常用的CTC Loss，结合CNN和RNN做特征提取，把文字整行识别转化为序列问题。
 
-![2019-7-16-im2](/Users/charlie_huang/Blog/hyichao.github.io/_posts/images/2019-7-16-im2.png)
+![2019-7-16-im2](/downloads/2019-7-16-im2.png)
 
 #### Introduction
 
@@ -76,7 +76,7 @@ tags: [Deep Learning, OCR]
 
 * 个人观点
 
-![2019-7-16-im2](/Users/charlie_huang/Blog/hyichao.github.io/_posts/images/2019-7-16-im3.png)
+![2019-7-16-im2](/downloads/2019-7-16-im3.png)
 
 #### Discussion
 

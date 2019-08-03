@@ -16,7 +16,7 @@ tags: [Deep Learning, OCR]
 
 输入一般为三通道RGB图像
 
-![](images/2019-7-14-im1.png)
+![](/downloads/2019-7-14-im1.png)
 
 ### Output
 
@@ -74,7 +74,7 @@ tags: [Deep Learning, OCR]
 >
 > [2] Shi, Baoguang, Xiang Bai, and Serge Belongie. "Detecting oriented text in natural images by linking segments." *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition*. 2017.
 
-![2019-7-15-im1](images/2019-7-15-im1.png)
+![2019-7-15-im1](/downloads/2019-7-15-im1.png)
 
 - 优势
 
@@ -118,7 +118,7 @@ tags: [Deep Learning, OCR]
 >
 > [2] Wang, Wenhai, et al. "Shape Robust Text Detection with Progressive Scale Expansion Network." *arXiv preprint arXiv:1903.12473* (2019).
 
-![2019-7-15-im2](images/2019-7-15-im2.png)
+![2019-7-15-im2](/downloads/2019-7-15-im2.png)
 
 - 优势
 
@@ -151,7 +151,7 @@ tags: [Deep Learning, OCR]
 >
 > [3] Baek, Youngmin, et al. "Character Region Awareness for Text Detection." (2019).
 
-![2019-7-15-im3](images/2019-7-15-im3.png)
+![2019-7-15-im3](/downloads/2019-7-15-im3.png)
 
 - 优势
 
