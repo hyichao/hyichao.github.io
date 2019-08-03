@@ -31,7 +31,7 @@ tags: [Deep Learning, OCR]
 
 OCR系统的输入一般是三通道图像，转化为数据格式为 [N,C,H,W]的图像，然后送入OCR系统
 
-![](downloads/2019-7-14-im1.png)
+![2019-7-14-im1](/downloads/2019-7-14-im1.png)
 
 图一 自然场景
 
