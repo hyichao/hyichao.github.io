@@ -99,5 +99,6 @@ comments: false
 
 ## Contact
 
+* Name: 黄毅超
 * E-mail: *hyichao at foxmail.com*
 * Github: *hyichao*
